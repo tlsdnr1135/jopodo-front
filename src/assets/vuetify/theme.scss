@@ -1,0 +1,127 @@
+// Vuetify 3 테마 커스터마이징 (SCSS 방식)
+
+// 🎨 메인 커스텀 색상
+$primary: #F5FCC8; // 요청하신 프라이머리 색상
+$secondary: #03DAC6;
+$accent: #82B1FF;
+$error: #FF5252;
+$info: #2196F3;
+$success: #4CAF50;
+$warning: #FFC107;
+
+// Vuetify 설정과 스타일 임포트
+@use 'vuetify/settings' with (
+  $color-pack: false,
+  $utilities: false
+);
+
+// Vuetify 메인 스타일 임포트
+@use 'vuetify';
+
+// 🎯 커스텀 CSS 변수 정의 (JavaScript에서 접근 가능)
+:root {
+  // Light 테마
+  --v-theme-primary: #{$primary};
+  --v-theme-secondary: #{$secondary};
+  --v-theme-accent: #{$accent};
+  --v-theme-error: #{$error};
+  --v-theme-info: #{$info};
+  --v-theme-success: #{$success};
+  --v-theme-warning: #{$warning};
+  
+  // Primary 변형들
+  --v-theme-primary-lighten-1: #{lighten($primary, 15%)};
+  --v-theme-primary-lighten-2: #{lighten($primary, 30%)};
+  --v-theme-primary-darken-1: #{darken($primary, 15%)};
+  --v-theme-primary-darken-2: #{darken($primary, 30%)};
+  
+  // Secondary 변형들
+  --v-theme-secondary-lighten-1: #{lighten($secondary, 15%)};
+  --v-theme-secondary-darken-1: #{darken($secondary, 15%)};
+}
+
+// Dark 테마 CSS 변수
+.v-theme--dark {
+  --v-theme-primary: #{$primary};
+  --v-theme-secondary: #{$secondary};
+  --v-theme-accent: #{$accent};
+  --v-theme-error: #CF6679;
+  --v-theme-info: #{$info};
+  --v-theme-success: #{$success};
+  --v-theme-warning: #{$warning};
+  
+  // Primary 변형들 (다크 모드)
+  --v-theme-primary-lighten-1: #{lighten($primary, 10%)};
+  --v-theme-primary-lighten-2: #{lighten($primary, 20%)};
+  --v-theme-primary-darken-1: #{darken($primary, 10%)};
+  --v-theme-primary-darken-2: #{darken($primary, 20%)};
+}
+
+// 🚀 추가 커스텀 스타일
+
+// 버튼 스타일 커스터마이징
+.v-btn {
+  border-radius: 8px !important; // 둥근 모서리
+  font-weight: 500 !important;   // 폰트 두께
+  text-transform: none !important; // 대문자 변환 비활성화
+  
+  // Primary 버튼의 텍스트 색상 (밝은 배경이므로 검은 텍스트)
+  &.bg-primary {
+    color: #000000 !important;
+    
+    .v-btn__content {
+      color: #000000 !important;
+    }
+  }
+}
+
+// 카드 스타일 커스터마이징
+.v-card {
+  border-radius: 12px !important; // 둥근 모서리
+}
+
+// 텍스트 필드 스타일 커스터마이징
+.v-field {
+  &.v-field--variant-outlined {
+    border-radius: 8px !important; // 둥근 모서리
+    
+    // 포커스 시 Primary 색상
+    &.v-field--focused {
+      .v-field__outline {
+        --v-field-border-color: #{$primary};
+        border-color: #{$primary} !important;
+      }
+    }
+  }
+}
+
+// Select 드롭다운도 같은 스타일 적용
+.v-select {
+  .v-field {
+    &.v-field--variant-outlined {
+      border-radius: 8px !important;
+      
+      &.v-field--focused {
+        .v-field__outline {
+          --v-field-border-color: #{$primary};
+          border-color: #{$primary} !important;
+        }
+      }
+    }
+  }
+}
+
+// 앱바에서 Primary 색상이 제대로 보이도록
+.v-app-bar.bg-primary {
+  background-color: #{$primary} !important;
+  color: #000000 !important; // 밝은 배경이므로 검은 텍스트
+  
+  .v-app-bar-title {
+    color: #000000 !important;
+  }
+  
+  // 버튼들도 검은색 텍스트
+  .v-btn {
+    color: #000000 !important;
+  }
+}
