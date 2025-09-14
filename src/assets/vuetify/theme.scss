@@ -1,5 +1,7 @@
 // Vuetify 3 테마 커스터마이징 (SCSS 방식)
 
+@use 'sass:color';
+
 // 🎨 메인 커스텀 색상
 $primary: #F5FCC8; // 요청하신 프라이머리 색상
 $secondary: #03DAC6;
@@ -30,14 +32,14 @@ $warning: #FFC107;
   --v-theme-warning: #{$warning};
   
   // Primary 변형들
-  --v-theme-primary-lighten-1: #{lighten($primary, 15%)};
-  --v-theme-primary-lighten-2: #{lighten($primary, 30%)};
-  --v-theme-primary-darken-1: #{darken($primary, 15%)};
-  --v-theme-primary-darken-2: #{darken($primary, 30%)};
+  --v-theme-primary-lighten-1: #{color.adjust($primary, $lightness: 15%)};
+  --v-theme-primary-lighten-2: #{color.adjust($primary, $lightness: 30%)};
+  --v-theme-primary-darken-1: #{color.adjust($primary, $lightness: -15%)};
+  --v-theme-primary-darken-2: #{color.adjust($primary, $lightness: -30%)};
   
   // Secondary 변형들
-  --v-theme-secondary-lighten-1: #{lighten($secondary, 15%)};
-  --v-theme-secondary-darken-1: #{darken($secondary, 15%)};
+  --v-theme-secondary-lighten-1: #{color.adjust($secondary, $lightness: 15%)};
+  --v-theme-secondary-darken-1: #{color.adjust($secondary, $lightness: -15%)};
 }
 
 // Dark 테마 CSS 변수
@@ -51,10 +53,10 @@ $warning: #FFC107;
   --v-theme-warning: #{$warning};
   
   // Primary 변형들 (다크 모드)
-  --v-theme-primary-lighten-1: #{lighten($primary, 10%)};
-  --v-theme-primary-lighten-2: #{lighten($primary, 20%)};
-  --v-theme-primary-darken-1: #{darken($primary, 10%)};
-  --v-theme-primary-darken-2: #{darken($primary, 20%)};
+  --v-theme-primary-lighten-1: #{color.adjust($primary, $lightness: 10%)};
+  --v-theme-primary-lighten-2: #{color.adjust($primary, $lightness: 20%)};
+  --v-theme-primary-darken-1: #{color.adjust($primary, $lightness: -10%)};
+  --v-theme-primary-darken-2: #{color.adjust($primary, $lightness: -20%)};
 }
 
 // 🚀 추가 커스텀 스타일

@@ -4,9 +4,10 @@ import firstImageSvg from '@/assets/image/firstImage.svg'
 import secondImageSvg from '@/assets/image/secondImage.svg'
 import thirdImageSvg from '@/assets/image/thirdImage.svg'
 import kakaoTalkSvg from '@/assets/image/kakaoTalk.svg'
+import { orderService, type OrderFormData } from '@/services/orderService'
 
 // 주문 폼 데이터
-const orderForm = ref({
+const orderForm = ref<OrderFormData>({
   selectedProducts: '예시) 1번 2개, 2번 1개',
   recipientName: '',
   recipientPhone: '',
@@ -14,6 +15,71 @@ const orderForm = ref({
   recommender: '',
   senderName: ''
 })
+
+// 로딩 상태
+const isLoading = ref(false)
+
+// 주문하기 함수
+const submitOrder = async () => {
+  try {
+    // 필수 입력 항목 검증
+    if (!orderForm.value.recipientName.trim()) {
+      alert('받는이 이름을 입력해주세요.')
+      return
+    }
+    
+    if (!orderForm.value.recipientPhone.trim()) {
+      alert('받는이 연락처를 입력해주세요.')
+      return
+    }
+    
+    if (!orderForm.value.recipientAddress.trim()) {
+      alert('받는이 주소를 입력해주세요.')
+      return
+    }
+
+    isLoading.value = true
+    
+    // API 호출
+    const result = await orderService.createOrder(orderForm.value)
+    
+    alert('주문이 성공적으로 접수되었습니다!')
+    console.log('주문 결과:', result)
+    
+    // 성공 후 폼 초기화 (선택사항)
+    // resetForm()
+    
+  } catch (error) {
+    console.error('주문 처리 중 오류:', error)
+    alert('주문 처리 중 오류가 발생했습니다. 다시 시도해주세요.')
+  } finally {
+    isLoading.value = false
+  }
+}
+
+// 폼 초기화 함수
+const resetForm = () => {
+  orderForm.value = {
+    selectedProducts: '예시) 1번 2개, 2번 1개',
+    recipientName: '',
+    recipientPhone: '',
+    recipientAddress: '',
+    recommender: '',
+    senderName: ''
+  }
+}
+
+// 계좌번호 복사 함수
+const copyAccountNumber = async () => {
+  const accountNumber = '농협 351 0367 8557 33 조동순'
+  try {
+    await navigator.clipboard.writeText(accountNumber)
+    alert('계좌번호가 복사되었습니다!')
+  } catch (error) {
+    console.error('복사 실패:', error)
+    alert('복사 기능을 지원하지 않는 브라우저입니다.')
+  }
+}
 
 // 문의 링크 함수들
 const openKakaoTalk = () => {
@@ -123,8 +189,11 @@ const openKakaoTalk = () => {
             size="large"
             color="#7E9509"
             block
+            :loading="isLoading"
+            :disabled="isLoading"
+            @click="submitOrder"
           >
-            주문하기
+            {{ isLoading ? '주문 처리중...' : '주문하기' }}
           </v-btn>
         </div>
       </div>
@@ -135,7 +204,7 @@ const openKakaoTalk = () => {
         <div class="account-info">
           <div class="account-details">
             <span>농협 351 0367 8557 33 조동순</span>
-            <v-btn size="small" color="success" class="confirm-btn">복사</v-btn>
+            <v-btn size="small" color="success" class="confirm-btn" @click="copyAccountNumber">복사</v-btn>
           </div>
         </div>
       </div>
