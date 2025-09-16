@@ -2,13 +2,13 @@ import axios from 'axios'
 
 // axios 인스턴스 생성
 const apiClient = axios.create({
-  // 기본 URL 설정 (실제 API 서버 URL로 변경하세요)
-  baseURL: process.env.NODE_ENV === 'production' 
-    ? 'https://your-api-server.com/api' 
-    : 'http://localhost:3000/api',
+  // 기본 URL 설정 (개발환경에서는 프록시 사용)
+  baseURL: process.env.NODE_ENV === 'production'
+    ? 'http://210.113.57.20:8080' 
+    : '',
   
   // 기본 타임아웃 설정 (10초)
-  timeout: 10000,
+  timeout: 20000,
   
   // 기본 헤더 설정
   headers: {
@@ -19,15 +19,6 @@ const apiClient = axios.create({
 // 요청 인터셉터
 apiClient.interceptors.request.use(
   (config) => {
-    // 요청 전에 실행될 코드
-    console.log('API 요청:', config.method?.toUpperCase(), config.url)
-    
-    // 인증 토큰이 있다면 헤더에 추가
-    const token = localStorage.getItem('authToken')
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`
-    }
-    
     return config
   },
   (error) => {
@@ -57,12 +48,3 @@ apiClient.interceptors.response.use(
 )
 
 export default apiClient
-
-// 편의 함수들
-export const api = {
-  get: (url: string, config?: any) => apiClient.get(url, config),
-  post: (url: string, data?: any, config?: any) => apiClient.post(url, data, config),
-  put: (url: string, data?: any, config?: any) => apiClient.put(url, data, config),
-  delete: (url: string, config?: any) => apiClient.delete(url, config),
-  patch: (url: string, data?: any, config?: any) => apiClient.patch(url, data, config),
-}

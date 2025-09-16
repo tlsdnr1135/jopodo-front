@@ -21,6 +21,14 @@ export default defineConfig({
     },
   },
   server: {
-    port: 3000
+    port: 3000,
+    proxy: {
+      // API 요청을 실제 서버로 프록시
+      '/jopodo': {
+        target: 'http://210.113.57.20:8080',
+        changeOrigin: true,
+        secure: false,
+      }
+    }
   }
 })

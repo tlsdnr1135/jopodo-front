@@ -1,8 +1,6 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 import Home from '@/pages/Home.vue'
-import About from '@/pages/About.vue'
-import Contact from '@/pages/Contact.vue'
-import ThemeTest from '@/pages/ThemeTest.vue'
+import Admin from "@/pages/Admin.vue";
 
 const routes: RouteRecordRaw[] = [
   {
@@ -11,19 +9,9 @@ const routes: RouteRecordRaw[] = [
     component: Home
   },
   {
-    path: '/about',
-    name: 'About',
-    component: About
-  },
-  {
-    path: '/contact',
-    name: 'Contact',
-    component: Contact
-  },
-  {
-    path: '/theme-test',
-    name: 'ThemeTest',
-    component: ThemeTest
+    path: '/admin',
+    name: 'admin',
+    component: Admin
   },
   {
     // 404 페이지 - 잘못된 경로로 접근시 홈으로 리다이렉트

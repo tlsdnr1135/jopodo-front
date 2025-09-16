@@ -6,67 +6,86 @@ import thirdImageSvg from '@/assets/image/thirdImage.svg'
 import kakaoTalkSvg from '@/assets/image/kakaoTalk.svg'
 import { orderService, type OrderFormData } from '@/services/orderService'
 
-// 주문 폼 데이터
-const orderForm = ref<OrderFormData>({
-  selectedProducts: '예시) 1번 2개, 2번 1개',
-  recipientName: '',
-  recipientPhone: '',
-  recipientAddress: '',
-  recommender: '',
-  senderName: ''
-})
+const firstProductCount = ref()
+const secondProductCount = ref()
+const eater = ref() // 받는이 이름
+const customerPhoneNum = ref()
+const customerAddress = ref()
+const recommenderId = ref()
+const customerName = ref()
+
+const orderCompleteDialog = ref<boolean>(false)
 
 // 로딩 상태
 const isLoading = ref(false)
 
 // 주문하기 함수
 const submitOrder = async () => {
+
+  if (!eater.value || eater.value.trim() === '') {
+    alert('받는이 이름을 입력해주세요.')
+    return
+  }
+
+  if (!customerPhoneNum.value || customerPhoneNum.value.trim() === '') {
+    alert('받는이 연락처를 입력해주세요.')
+    return
+  }
+
+  if (!customerAddress.value || customerAddress.value.trim() === '') {
+    alert('받는이 주소를 입력해주세요.')
+    return
+  }
+
+  if (!firstProductCount.value && !secondProductCount.value) {
+    alert('주문할 상품을 선택해주세요.')
+    return
+  }
+
   try {
-    // 필수 입력 항목 검증
-    if (!orderForm.value.recipientName.trim()) {
-      alert('받는이 이름을 입력해주세요.')
-      return
+
+    const productIds = []
+    if (firstProductCount.value && firstProductCount.value > 0) {
+      productIds.push({ productId: 1, quantity: firstProductCount.value })
     }
-    
-    if (!orderForm.value.recipientPhone.trim()) {
-      alert('받는이 연락처를 입력해주세요.')
-      return
-    }
-    
-    if (!orderForm.value.recipientAddress.trim()) {
-      alert('받는이 주소를 입력해주세요.')
-      return
+    if (secondProductCount.value && secondProductCount.value > 0) {
+      productIds.push({ productId: 2, quantity: secondProductCount.value })
     }
 
-    isLoading.value = true
-    
-    // API 호출
-    const result = await orderService.createOrder(orderForm.value)
-    
-    alert('주문이 성공적으로 접수되었습니다!')
+    const request = {
+      orderItems: productIds, // 상품
+      customerName: customerName.value, // 받는이 이름 (구매자)
+      customerPhoneNum: customerPhoneNum.value, // 받는이 연락처
+      customerAddress: customerAddress.value, // 주소
+      recommenderId: recommenderId.value, // 추천인
+      eater: eater.value, // 보내는이
+    }
+
+    const result = await orderService.createOrder(request)
     console.log('주문 결과:', result)
-    
-    // 성공 후 폼 초기화 (선택사항)
-    // resetForm()
-    
+    orderCompleteDialog.value = true
+
   } catch (error) {
     console.error('주문 처리 중 오류:', error)
     alert('주문 처리 중 오류가 발생했습니다. 다시 시도해주세요.')
   } finally {
-    isLoading.value = false
   }
 }
 
 // 폼 초기화 함수
 const resetForm = () => {
-  orderForm.value = {
-    selectedProducts: '예시) 1번 2개, 2번 1개',
-    recipientName: '',
-    recipientPhone: '',
-    recipientAddress: '',
-    recommender: '',
-    senderName: ''
-  }
+  // orderForm.value = {
+  //   productId: [{
+  //     productId: 1,
+  //     count: 1
+  //   }],
+  //   customerName: '',
+  //   customerPhoneNum: '',
+  //   customerAddress: '',
+  //   recommenderId: ''
+  // }
+  // firstProductCount.value = ''
+  // secondProductCount.value = ''
 }
 
 // 계좌번호 복사 함수
@@ -101,18 +120,30 @@ const openKakaoTalk = () => {
     <!-- 주문폼 -->
     <div class="order-form-section">
       <h2 class="section-title">주문하기</h2>
-      
+
       <div class="form-container">
         <!-- 선택 상품 -->
         <div class="form-row">
-          <label class="form-label">선택 상품</label>
+          <label class="form-label">선택 상품 1번</label>
           <v-text-field
-            v-model="orderForm.selectedProducts"
-            placeholder="예시) 1번 2개, 2번 1개"
+            v-model="firstProductCount"
+            placeholder="구매할 숫자만 입력"
             variant="outlined"
             density="compact"
             class="form-input"
             hide-details
+          />
+        </div>
+        <!-- 선택 상품 -->
+        <div class="form-row">
+          <label class="form-label">선택 상품 2번</label>
+          <v-text-field
+              v-model="secondProductCount"
+              placeholder="구매할 숫자만 입력"
+              variant="outlined"
+              density="compact"
+              class="form-input"
+              hide-details
           />
         </div>
 
@@ -120,7 +151,7 @@ const openKakaoTalk = () => {
         <div class="form-row">
           <label class="form-label">받는이 이름</label>
           <v-text-field
-            v-model="orderForm.recipientName"
+            v-model="eater"
             placeholder="받는이 이름"
             variant="outlined"
             density="compact"
@@ -133,7 +164,7 @@ const openKakaoTalk = () => {
         <div class="form-row">
           <label class="form-label">받는이 연락처</label>
           <v-text-field
-            v-model="orderForm.recipientPhone"
+            v-model="customerPhoneNum"
             placeholder="010-1234-5678"
             variant="outlined"
             density="compact"
@@ -147,7 +178,7 @@ const openKakaoTalk = () => {
         <div class="form-row">
           <label class="form-label">받는이 주소</label>
           <v-text-field
-            v-model="orderForm.recipientAddress"
+            v-model="customerAddress"
             placeholder="○○시 ○○구 ○○동"
             variant="outlined"
             density="compact"
@@ -160,7 +191,7 @@ const openKakaoTalk = () => {
         <div class="form-row">
           <label class="form-label">추천인</label>
           <v-text-field
-            v-model="orderForm.recommender"
+            v-model="recommenderId"
             placeholder="추천인 이름을 입력해주세요."
             variant="outlined"
             density="compact"
@@ -172,19 +203,19 @@ const openKakaoTalk = () => {
          <!-- 보내는이 이름 -->
          <div class="form-row form-row-separated">
            <label class="form-label">보내는이 이름</label>
-          <v-text-field
-            v-model="orderForm.senderName"
-            placeholder="선물로 경우, 꼭 입력해주세요."
-            variant="outlined"
-            density="compact"
-            class="form-input"
-            hide-details
-          />
+            <v-text-field
+              v-model="customerName"
+              placeholder="선물로 경우, 꼭 입력해주세요."
+              variant="outlined"
+              density="compact"
+              class="form-input"
+              hide-details
+            />
         </div>
 
         <!-- 주문하기 버튼 -->
         <div class="order-button-container">
-          <v-btn 
+          <v-btn
             class="order-button"
             size="large"
             color="#7E9509"
@@ -211,15 +242,40 @@ const openKakaoTalk = () => {
 
       <!-- 문의 버튼들 -->
       <div class="contact-buttons">
-        <img 
-          :src="kakaoTalkSvg" 
-          alt="카카오톡 문의" 
+        <img
+          :src="kakaoTalkSvg"
+          alt="카카오톡 문의"
           class="contact-image kakao-image"
           @click="openKakaoTalk"
         />
       </div>
     </div>
   </div>
+  <!-- 주문 완료 다이얼로그 -->
+  <v-dialog v-model="orderCompleteDialog" max-width="400" persistent>
+    <v-card class="order-complete-card">
+      <v-btn
+        icon="mdi-close"
+        variant="text"
+        class="close-btn"
+        @click="orderCompleteDialog = false"
+      ></v-btn>
+
+      <v-card-text class="text-center pa-8">
+        <div class="check-icon-container">
+          <v-icon color="#4CAF50" size="64">mdi-check-circle</v-icon>
+        </div>
+
+        <h2 class="order-complete-title mt-4 mb-4">주문이 접수되었어요!</h2>
+
+        <div class="order-complete-message">
+          <p class="message-text">주말 제외, 주문 이후</p>
+          <p class="message-text">배송이 시작해요</p>
+          <p class="delivery-info">(2-3일 이내 도착 예정)</p>
+        </div>
+      </v-card-text>
+    </v-card>
+  </v-dialog>
 </template>
 
 <style scoped>
@@ -392,6 +448,48 @@ const openKakaoTalk = () => {
 .kakao-image {
   width: 400px;
   height: auto;
+}
+
+/* 주문 완료 다이얼로그 스타일 */
+.order-complete-card {
+  border-radius: 20px !important;
+  position: relative;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+}
+
+.close-btn {
+  position: absolute !important;
+  top: 16px;
+  right: 16px;
+  z-index: 10;
+}
+
+.check-icon-container {
+  margin: 20px 0;
+}
+
+.order-complete-title {
+  color: #333;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.order-complete-message {
+  margin-top: 20px;
+}
+
+.message-text {
+  color: #666;
+  font-size: 16px;
+  line-height: 1.4;
+  margin: 2px 0;
+}
+
+.delivery-info {
+  color: #999;
+  font-size: 14px;
+  margin-top: 8px;
 }
 
 
