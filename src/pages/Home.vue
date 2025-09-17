@@ -510,9 +510,7 @@ const openKakaoTalk = () => {
     font-size: 20px;
   }
   
-  .order-form-section,
-  .product-section,
-  .order-method-section {
+  .order-form-section {
     padding: 20px 15px;
   }
 

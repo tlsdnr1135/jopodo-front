@@ -235,22 +235,7 @@ onMounted(async ()=>{
   padding: 20px;
 }
 
-.brand-image-item {
-  max-width: 100%;
-  width: 100%;
-  max-width: 400px;
-  height: auto;
-  display: block;
-}
 
-/* 섹션 공통 스타일 */
-.section-title {
-  font-size: 24px;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 20px;
-  color: #2c5234;
-}
 
 /* 주문폼 섹션 */
 .order-form-section {
@@ -279,33 +264,7 @@ onMounted(async ()=>{
   justify-content: center !important;
 }
 
-/* 탭 콘텐츠 */
-.tab-content {
-  padding: 20px;
-  text-align: center;
-  color: #2c5234;
-  font-size: 16px;
-  font-weight: 500;
-}
 
-/* 작은 페이지네이션 */
-.pagination-small {
-  padding: 10px;
-}
-
-:deep(.pagination-small .v-pagination__item) {
-  width: 32px !important;
-  height: 32px !important;
-  min-width: 32px !important;
-  font-size: 12px !important;
-}
-
-:deep(.pagination-small .v-btn) {
-  width: 32px !important;
-  height: 32px !important;
-  min-width: 32px !important;
-  font-size: 12px !important;
-}
 
 /* 모바일 친화적 테이블 스타일 */
 .mobile-table {
@@ -418,203 +377,18 @@ onMounted(async ()=>{
 
 /* 셀렉트박스 드롭다운 메뉴 크기 조정 - 강력한 선택자 */
 
-.form-container {
-  max-width: 400px;
-  margin: 0 auto 30px;
-}
 
-/* 폼 행 - 라벨과 인풋이 같은 라인 */
-.form-row {
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px;
-  gap: 15px;
-}
 
-.form-label {
-  min-width: 80px;
-  font-weight: bold;
-  color: #2c5234;
-  font-size: 14px;
-  text-align: left;
-  flex-shrink: 0;
-}
 
-.form-row-separated {
-  border-top: 1px solid rgba(44, 82, 52, 0.3);
-  padding-top: 15px;
-  margin-top: 15px;
-}
-
-.form-input {
-  flex: 1;
-}
-
-.form-input :deep(.v-field__input) {
-  padding: 8px 12px;
-  font-size: 14px;
-}
-
-.form-input :deep(.v-field) {
-  background-color: rgba(255, 255, 255, 0.9);
-  border-radius: 8px;
-}
-
-/* 입금 계좌번호 */
-.account-section {
-  margin: 30px auto;
-  max-width: 400px;
-  text-align: center;
-}
-
-.account-title {
-  margin-bottom: 15px;
-  color: #2c5234;
-  font-size: 16px;
-  font-weight: bold;
-  background: transparent;
-}
-
-.account-info {
-  background-color: rgba(255, 255, 255, 0.9);
-  border-radius: 12px;
-  padding: 20px;
-}
-
-.account-details {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 15px;
-}
-
-.account-details span {
-  color: #333;
-  font-size: 14px;
-  font-weight: 500;
-  flex: 1;
-}
-
-.confirm-btn {
-  background-color: #C1C1C1 !important;
-  color: white !important;
-  border-radius: 20px;
-  font-weight: bold;
-  padding: 0 20px;
-}
-
-/* 주문하기 버튼 */
-.order-button-container {
-  margin-top: 25px;
-  margin-bottom: 5px;
-}
-
-.order-button {
-  background-color: #7E9509 !important;
-  color: white !important;
-  font-weight: bold;
-  font-size: 16px !important;
-  border-radius: 12px;
-  height: 48px !important;
-  text-transform: none !important;
-  box-shadow: 0 4px 8px rgba(126, 149, 9, 0.3) !important;
-}
-
-/* 문의 버튼들 */
-.contact-buttons {
-  display: flex;
-  gap: 15px;
-  justify-content: center;
-  margin: 30px auto 0;
-  max-width: 400px;
-  width: 100%;
-  flex-wrap: wrap;
-}
-
-.contact-image {
-  cursor: pointer;
-  transition: transform 0.2s ease, opacity 0.2s ease;
-}
-
-.contact-image:hover {
-  transform: scale(1.05);
-  opacity: 0.9;
-}
-
-.contact-image:active {
-  transform: scale(0.95);
-}
-
-.kakao-image {
-  width: 400px;
-  height: auto;
-}
 
 
 /* 모바일 반응형 */
 @media (max-width: 600px) {
 
-  .section-title {
-    font-size: 20px;
-  }
-
-  .order-form-section,
-  .product-section,
-  .order-method-section {
+  .order-form-section {
     padding: 20px 15px;
   }
 
-  /* 모바일에서도 폼 행 스타일을 가로로 유지 */
-  .form-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .form-row-separated {
-    border-top: 1px solid rgba(44, 82, 52, 0.3);
-    padding-top: 15px;
-    margin-top: 15px;
-  }
-
-  .form-label {
-    min-width: 70px;
-    font-size: 13px;
-  }
-
-  .form-input {
-    flex: 1;
-  }
-
-  .contact-buttons {
-    gap: 10px;
-    justify-content: center;
-    max-width: calc(100% - 30px);
-    margin: 30px 15px 0;
-  }
-
-  .contact-image {
-    height: 35px;
-  }
-
-  .kakao-image {
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-  }
-
-  .account-details {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-  }
-
-  .account-details span {
-    font-size: 13px;
-    flex: 1;
-    text-align: left;
-  }
 
   /* 모바일에서 테이블 셀과 버튼 크기 조정 */
   .table-cell {
