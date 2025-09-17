@@ -14,7 +14,7 @@ const customerAddress = ref()
 const recommenderId = ref()
 const customerName = ref()
 
-const orderCompleteDialog = ref<boolean>(false)
+const orderCompleteDialog = ref<boolean>(true)
 
 // 로딩 상태
 const isLoading = ref(false)
@@ -570,7 +570,7 @@ const openKakaoTalk = () => {
   .order-complete-card {
     max-width: calc(100vw - 30px) !important;
     width: calc(100vw - 30px) !important;
-    margin: 15px !important;
+    margin: 15px auto !important;
   }
 
   .order-complete-card .v-card-text {

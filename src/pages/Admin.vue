@@ -564,7 +564,7 @@ onMounted(async ()=>{
 }
 </style>
 
-<style>
+<style scoped>
 /* 전역 Vuetify 셀렉트박스 드롭다운 스타일 */
 .v-overlay .v-list {
   min-width: 100px !important;
