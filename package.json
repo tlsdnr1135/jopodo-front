@@ -8,8 +8,8 @@
   },
   "scripts": {
     "local": "vite --mode localhost",
-    "dev": "vite --mode dev",
-    "build": "vite build",
+    "prod": "vite --mode prod",
+    "build": "vite build localhost",
     "build-check": "vue-tsc && vite build",
     "preview": "vite preview",
     "type-check": "vue-tsc --noEmit"
