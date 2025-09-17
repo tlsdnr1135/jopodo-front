@@ -1,8 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import firstImageSvg from '@/assets/image/firstImage.svg'
-import secondImageSvg from '@/assets/image/secondImage.svg'
-import thirdImageSvg from '@/assets/image/thirdImage.svg'
 import kakaoTalkSvg from '@/assets/image/kakaoTalk.svg'
 import { orderService } from '@/services/orderService'
 
@@ -101,9 +98,9 @@ const openKakaoTalk = () => {
   <div class="home">
     <!-- 브랜드 이미지 -->
     <div class="brand-image">
-      <img :src="firstImageSvg" alt="조씨네 샤인머스켓 - 첫번째" class="brand-image-item" />
-      <img :src="secondImageSvg" alt="조씨네 샤인머스켓 - 두번째" class="brand-image-item" />
-      <img :src="thirdImageSvg" alt="조씨네 샤인머스켓 - 세번째" class="brand-image-item" />
+      <img width="590" height="1151" alt="1111111111111111" src="https://github.com/user-attachments/assets/433a2819-4d30-4fbc-8687-3648d786eb44" />
+      <img width="393" height="1013" alt="222222222222222222" src="https://github.com/user-attachments/assets/12e66293-1ea5-4237-83c6-291b6d63276b" />
+      <img width="393" height="626" alt="3333333333333333333" src="https://github.com/user-attachments/assets/669fb970-f45d-4e09-8ec4-c8621adfce84" />
     </div>
 
     <!-- 주문폼 -->
