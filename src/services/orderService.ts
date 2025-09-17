@@ -29,6 +29,10 @@ export const orderService = {
   searchDetails: async (userId: number ) => {
     return await apiClient.get(`/jopodo/orders/${userId}`)
   },
+  // 주문 상태 변경
+  updateStatus: async (id: number, params: any ) => {
+    return await apiClient.post(`/jopodo/orders/${id}`, params)
+  },
 }
 
 export default orderService

@@ -4,7 +4,7 @@ import firstImageSvg from '@/assets/image/firstImage.svg'
 import secondImageSvg from '@/assets/image/secondImage.svg'
 import thirdImageSvg from '@/assets/image/thirdImage.svg'
 import kakaoTalkSvg from '@/assets/image/kakaoTalk.svg'
-import { orderService, type OrderFormData } from '@/services/orderService'
+import { orderService } from '@/services/orderService'
 
 const firstProductCount = ref()
 const secondProductCount = ref()
@@ -42,6 +42,11 @@ const submitOrder = async () => {
     return
   }
 
+  if (!recommenderId.value) {
+    alert('추천인을 선택해주세요.')
+    return
+  }
+
   try {
 
     const productIds = []
@@ -70,22 +75,6 @@ const submitOrder = async () => {
     alert('주문 처리 중 오류가 발생했습니다. 다시 시도해주세요.')
   } finally {
   }
-}
-
-// 폼 초기화 함수
-const resetForm = () => {
-  // orderForm.value = {
-  //   productId: [{
-  //     productId: 1,
-  //     count: 1
-  //   }],
-  //   customerName: '',
-  //   customerPhoneNum: '',
-  //   customerAddress: '',
-  //   recommenderId: ''
-  // }
-  // firstProductCount.value = ''
-  // secondProductCount.value = ''
 }
 
 // 계좌번호 복사 함수
@@ -132,6 +121,8 @@ const openKakaoTalk = () => {
             density="compact"
             class="form-input"
             hide-details
+            type="number"
+            oninput="javascript: this.value = this.value.replace(/\D/g, '');"
           />
           <label>개</label>
         </div>
@@ -145,6 +136,8 @@ const openKakaoTalk = () => {
               density="compact"
               class="form-input"
               hide-details
+              type="number"
+              oninput="javascript: this.value = this.value.replace(/\D/g, '');"
           />
           <label>개</label>
         </div>

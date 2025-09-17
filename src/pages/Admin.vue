@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import {onMounted, ref} from 'vue'
 import orderService from "@/services/orderService.ts";
-import {ca} from "vuetify/locale";
-const tab = ref(1)
 
 const items = [
   {text: '유재경' , value: 1},
@@ -10,12 +8,15 @@ const items = [
   {text: '조유나' , value: 3},
   {text: '조용준' , value: 4}
 ]
-// 표 데이터 포맷
-const response = ref([{}])
-const isDetail = ref(false)
-const selectedItem = ref<any>(null)
 const loading = ref(false)
+
+const isDetail = ref(false)
+const tab = ref(1)
+const response = ref([{}])
 const modalResponse = ref()
+
+/////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
 const changeHandle = async () => {
   try {
@@ -31,7 +32,7 @@ const changeHandle = async () => {
 
 const viewDetail = async (item: any) => {
   console.log('자세히보기 클릭:', item)
-  const data = await orderService.searchDetails(1)
+  const data = await orderService.searchDetails(item.id)
   modalResponse.value = data.data.data
   try{
 
@@ -39,10 +40,24 @@ const viewDetail = async (item: any) => {
     console.log(err)
   }
 
-  selectedItem.value = item
   isDetail.value = true
 }
+const updateStatus = async (item: any, newStatus: string) => {
+  try {
+    loading.value = true
+    // 서버에 상태 업데이트 요청
+    await orderService.updateStatus(item.id, { orderStatus: newStatus })
+    await changeHandle()
 
+    console.log('주문 상태가 성공적으로 업데이트되었습니다.')
+  } catch (e) {
+    console.error('주문 상태 업데이트 실패:', e)
+    // 에러 발생 시 이전 상태로 되돌리기 위해 데이터 다시 로드
+    await changeHandle()
+  } finally {
+    loading.value = false
+  }
+}
 onMounted(async ()=>{
   await changeHandle()
 })
@@ -92,7 +107,7 @@ onMounted(async ()=>{
             <template v-slot:item="{ item, index }">
               <tr>
                 <td class="table-cell">{{ index + 1 }}</td>
-                <td class="table-cell">{{ (item as any)?.eater || '-' }}</td>
+                <td class="table-cell">{{ item.eater || '-' }}</td>
                 <td class="table-cell">
                    <v-select
                        v-model="(item as any).orderStatus"
@@ -110,12 +125,7 @@ onMounted(async ()=>{
                        size="x-small"
                        class="table-select"
                        hide-details
-                       style="max-width: 90px; width: 90px; margin: 0 auto;"
-                       :menu-props="{ 
-                         maxWidth: 90,
-                         minWidth: 70,
-                         width: 80
-                       }"
+                       @update:model-value="(newValue) => updateStatus(item, newValue)"
                    />
                 </td>
                 <td class="table-cell">
@@ -160,17 +170,28 @@ onMounted(async ()=>{
       </v-card-title>
       
       <v-card-text class="detail-content">
-        <div v-if="selectedItem" class="detail-fields">
+        <div class="detail-fields">
           <div class="detail-row">
             <div class="detail-label">보내는이 이름</div>
-            <div class="detail-value">{{ modalResponse?.customerName || '선물용도 아님!!' }}</div>
+            <div class="detail-value">{{ modalResponse?.customerName || '없음,,선물용도 아님!!' }}</div>
           </div>
           
           <div class="detail-row">
             <div class="detail-label">선택 상품</div>
-            <div class="detail-value">{{ modalResponse?.productName }} - {{modalResponse?.productPrice }} 개</div>
+            <div 
+              v-for="(item, index) in modalResponse?.orderItems" 
+              :key="index"
+              class="detail-value"
+            >
+              상품 {{ item.productId }}번 - {{ item.quantity }}개
+            </div>
           </div>
-          
+
+          <div class="detail-row">
+            <div class="detail-label">합산가격</div>
+            <div class="detail-value">{{ modalResponse?.orderPrice || '-' }}원</div>
+          </div>
+
           <div class="detail-row">
             <div class="detail-label">받는이 이름</div>
             <div class="detail-value">{{ modalResponse?.eater || '-' }}</div>
@@ -244,14 +265,14 @@ onMounted(async ()=>{
 .custom-tabs :deep(.v-tab) {
   max-width: 80px !important;
   min-width: 40px !important;
-  width: 60px !important;
+  width: 80px !important;
   flex: 0 0 60px !important;
   padding: 0 8px !important;
 }
 
 .custom-tabs :deep(.v-tabs--fixed-tabs .v-tab) {
-  max-width: 80px !important;
-  width: 80px !important;
+  max-width: 100px !important;
+  width: 100px !important;
 }
 
 .custom-tabs :deep(.v-slide-group__content) {
@@ -358,22 +379,22 @@ onMounted(async ()=>{
 
 /* 테이블 내 셀렉트박스 스타일 */
 .table-select {
-  max-width: 100px !important;
-  min-height: 28px !important;
-  width: 100px !important;
+  max-width: 120px !important;
+  min-height: 30px !important;
+  width: 120px !important;
   margin: 0 auto !important;
 }
 
 :deep(.table-select .v-field) {
-  min-height: 28px !important;
-  font-size: 11px !important;
-  max-width: 100px !important;
+  min-height: 30px !important;
+  font-size: 12px !important;
+  max-width: 120px !important;
 }
 
 :deep(.table-select .v-field__input) {
-  min-height: 28px !important;
-  padding: 2px 6px !important;
-  font-size: 11px !important;
+  min-height: 30px !important;
+  padding: 4px 8px !important;
+  font-size: 12px !important;
   text-align: center !important;
 }
 
@@ -382,13 +403,13 @@ onMounted(async ()=>{
 }
 
 :deep(.table-select .v-select__selection) {
-  font-size: 11px !important;
+  font-size: 12px !important;
   text-align: center !important;
   justify-content: center !important;
 }
 
 :deep(.table-select .v-input__control) {
-  min-height: 28px !important;
+  min-height: 30px !important;
 }
 
 :deep(.table-select .v-field__append-inner) {
@@ -608,20 +629,22 @@ onMounted(async ()=>{
     padding: 0 6px !important;
   }
 
-  /* 모바일에서 셀렉트박스 더 작게 */
+  /* 모바일에서 셀렉트박스 크기 조정 */
   .table-select {
-    max-width: 80px !important;
-    min-height: 28px !important;
+    max-width: 100px !important;
+    min-height: 30px !important;
+    width: 100px !important;
   }
 
   :deep(.table-select .v-field) {
-    min-height: 28px !important;
+    min-height: 30px !important;
     font-size: 11px !important;
+    max-width: 100px !important;
   }
 
   :deep(.table-select .v-field__input) {
-    min-height: 28px !important;
-    padding: 2px 6px !important;
+    min-height: 30px !important;
+    padding: 3px 6px !important;
     font-size: 11px !important;
   }
 
@@ -629,10 +652,10 @@ onMounted(async ()=>{
     font-size: 11px !important;
   }
 
-  /* 모바일에서 드롭다운 메뉴 더 작게 */
+  /* 모바일에서 드롭다운 메뉴 크기 조정 */
   :deep(.table-select-menu .v-list) {
-    min-width: 100px !important;
-    max-width: 120px !important;
+    min-width: 110px !important;
+    max-width: 130px !important;
   }
 
   :deep(.table-select-menu .v-list-item) {
@@ -770,40 +793,40 @@ onMounted(async ()=>{
 <style>
 /* 전역 Vuetify 셀렉트박스 드롭다운 스타일 */
 .v-overlay .v-list {
-  min-width: 80px !important;
-  max-width: 100px !important;
-  width: 90px !important;
+  min-width: 100px !important;
+  max-width: 130px !important;
+  width: 120px !important;
 }
 
 .v-overlay .v-list-item {
-  min-height: 24px !important;
-  padding: 2px 6px !important;
-  font-size: 10px !important;
+  min-height: 28px !important;
+  padding: 4px 8px !important;
+  font-size: 11px !important;
 }
 
 .v-overlay .v-list-item__content {
-  font-size: 10px !important;
+  font-size: 11px !important;
 }
 
 .v-overlay .v-list-item-title {
-  font-size: 10px !important;
-  line-height: 1.1 !important;
+  font-size: 11px !important;
+  line-height: 1.2 !important;
   text-align: center !important;
 }
 
 .v-overlay__content {
-  min-width: 80px !important;
-  max-width: 100px !important;
-  width: 90px !important;
+  min-width: 100px !important;
+  max-width: 130px !important;
+  width: 120px !important;
 }
 
 /* 모든 v-select 스타일 강제 적용 */
 .v-select .v-field {
-  max-width: 100px !important;
+  max-width: 120px !important;
 }
 
 .v-select .v-input__control {
-  max-width: 100px !important;
+  max-width: 120px !important;
 }
 
 /* 상세 모달 완전한 가운데 정렬 */
