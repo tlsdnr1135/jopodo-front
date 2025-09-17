@@ -19,7 +19,16 @@ export const orderService = {
   createOrder: async (orderData: OrderFormData) => {
     return await apiClient.post('/jopodo/orders', orderData)
   },
-
+  // 추천인별로 주문 조회
+  searchOrderDetails: async (userId: number ) => {
+    return await apiClient.get('/jopodo/orders', {
+      params: { userId }
+    })
+  },
+  // 주문 상세 조회
+  searchDetails: async (userId: number ) => {
+    return await apiClient.get(`/jopodo/orders/${userId}`)
+  },
 }
 
 export default orderService

@@ -5,9 +5,8 @@ const apiClient = axios.create({
   // 기본 URL 설정 (개발환경에서는 프록시 사용)
   baseURL: process.env.NODE_ENV === 'production'
     ? 'http://210.113.57.20:8080' 
-    : '',
-  
-  // 기본 타임아웃 설정 (10초)
+    : 'http://localhost:3000',
+
   timeout: 20000,
   
   // 기본 헤더 설정

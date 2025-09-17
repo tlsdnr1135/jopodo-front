@@ -124,7 +124,7 @@ const openKakaoTalk = () => {
       <div class="form-container">
         <!-- 선택 상품 -->
         <div class="form-row">
-          <label class="form-label">선택 상품 1번</label>
+          <label class="form-label">상품 1번</label>
           <v-text-field
             v-model="firstProductCount"
             placeholder="구매할 숫자만 입력"
@@ -133,10 +133,11 @@ const openKakaoTalk = () => {
             class="form-input"
             hide-details
           />
+          <label>개</label>
         </div>
         <!-- 선택 상품 -->
         <div class="form-row">
-          <label class="form-label">선택 상품 2번</label>
+          <label class="form-label">상품 2번</label>
           <v-text-field
               v-model="secondProductCount"
               placeholder="구매할 숫자만 입력"
@@ -145,6 +146,7 @@ const openKakaoTalk = () => {
               class="form-input"
               hide-details
           />
+          <label>개</label>
         </div>
 
         <!-- 받는이 이름 -->
@@ -190,13 +192,21 @@ const openKakaoTalk = () => {
         <!-- 추천인 -->
         <div class="form-row">
           <label class="form-label">추천인</label>
-          <v-text-field
+          <v-select
             v-model="recommenderId"
-            placeholder="추천인 이름을 입력해주세요."
+            :items="[
+              {text: '유재경' , value: 1},
+              {text: '조윤혁' , value: 2},
+              {text: '조유나' , value: 3},
+              {text: '조용준' , value: 4},
+            ]"
+            item-title="text"
+            item-value="value"
             variant="outlined"
             density="compact"
             class="form-input"
             hide-details
+            placeholder="추천인을 선택해주세요"
           />
         </div>
 
@@ -252,7 +262,7 @@ const openKakaoTalk = () => {
     </div>
   </div>
   <!-- 주문 완료 다이얼로그 -->
-  <v-dialog v-model="orderCompleteDialog" max-width="400" persistent>
+  <v-dialog v-model="orderCompleteDialog" max-width="300" width="75%" persistent>
     <v-card class="order-complete-card">
       <v-btn
         icon="mdi-close"
@@ -261,9 +271,9 @@ const openKakaoTalk = () => {
         @click="orderCompleteDialog = false"
       ></v-btn>
 
-      <v-card-text class="text-center pa-8">
+      <v-card-text class="text-center pa-6">
         <div class="check-icon-container">
-          <v-icon color="#4CAF50" size="64">mdi-check-circle</v-icon>
+          <v-icon color="#4CAF50" size="56">mdi-check-circle</v-icon>
         </div>
 
         <h2 class="order-complete-title mt-4 mb-4">주문이 접수되었어요!</h2>
@@ -452,44 +462,51 @@ const openKakaoTalk = () => {
 
 /* 주문 완료 다이얼로그 스타일 */
 .order-complete-card {
-  border-radius: 20px !important;
+  border-radius: 16px !important;
   position: relative;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+  max-width: 350px !important;
+  width: 100% !important;
 }
 
 .close-btn {
   position: absolute !important;
-  top: 16px;
-  right: 16px;
+  top: 12px;
+  right: 12px;
   z-index: 10;
+  width: 32px !important;
+  height: 32px !important;
 }
 
 .check-icon-container {
-  margin: 20px 0;
+  margin: 16px 0 12px;
 }
 
 .order-complete-title {
   color: #333;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 600;
   line-height: 1.3;
+  white-space: nowrap;
 }
 
 .order-complete-message {
-  margin-top: 20px;
+  margin-top: 16px;
 }
 
 .message-text {
   color: #666;
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1.4;
   margin: 2px 0;
+  white-space: nowrap;
 }
 
 .delivery-info {
   color: #999;
-  font-size: 14px;
-  margin-top: 8px;
+  font-size: 13px;
+  margin-top: 6px;
+  white-space: nowrap;
 }
 
 
@@ -556,6 +573,60 @@ const openKakaoTalk = () => {
     font-size: 13px;
     flex: 1;
     text-align: left;
+  }
+
+  /* 모바일 주문 완료 모달 */
+  .order-complete-card {
+    max-width: calc(100vw - 30px) !important;
+    width: calc(100vw - 30px) !important;
+    margin: 15px !important;
+  }
+
+  .order-complete-card .v-card-text {
+    padding: 20px 16px !important;
+  }
+
+  .close-btn {
+    top: 8px !important;
+    right: 8px !important;
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  .check-icon-container {
+    margin: 12px 0 8px;
+  }
+
+  .check-icon-container .v-icon {
+    font-size: 48px !important;
+  }
+
+  .order-complete-title {
+    font-size: 18px !important;
+    margin-bottom: 12px !important;
+  }
+
+  .order-complete-message {
+    margin-top: 12px;
+  }
+
+  .message-text {
+    font-size: 14px !important;
+  }
+
+  .delivery-info {
+    font-size: 12px !important;
+  }
+}
+</style>
+
+<style>
+/* 주문 완료 다이얼로그 전역 스타일 */
+@media (max-width: 600px) {
+  .v-overlay__content:has(.order-complete-card) {
+    margin: 15px !important;
+    max-width: calc(100vw - 30px) !important;
+    width: calc(100vw - 30px) !important;
   }
 }
 </style>
