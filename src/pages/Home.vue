@@ -14,7 +14,7 @@ const customerAddress = ref()
 const recommenderId = ref()
 const customerName = ref()
 
-const orderCompleteDialog = ref<boolean>(true)
+const orderCompleteDialog = ref<boolean>(false)
 
 // 로딩 상태
 const isLoading = ref(false)

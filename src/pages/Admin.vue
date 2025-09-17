@@ -448,16 +448,6 @@ onMounted(async ()=>{
   }
 }
 
-/* 상세보기 모달 스타일 */
-.detail-card {
-  background-color: white !important;
-  border-radius: 8px !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
-  width: 100% !important;
-  max-width: 400px !important;
-  min-width: 300px !important;
-}
-
 .detail-header {
   display: flex !important;
   justify-content: space-between !important;
@@ -528,13 +518,6 @@ onMounted(async ()=>{
 
 /* 모바일 모달 스타일 */
 @media (max-width: 600px) {
-  .detail-card {
-    margin: 0 auto !important;
-    max-width: calc(100vw - 30px) !important;
-    min-width: calc(100vw - 30px) !important;
-    width: calc(100vw - 30px) !important;
-  }
-  
   .detail-header {
     padding: 12px 16px 8px !important;
     min-height: 50px !important;
@@ -603,58 +586,5 @@ onMounted(async ()=>{
   max-width: 120px !important;
 }
 
-/* 상세 모달 완전한 가운데 정렬 */
-.detail-dialog .v-overlay__scrim {
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-}
 
-.detail-dialog .v-overlay__content-container {
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  width: 100% !important;
-  height: 100% !important;
-}
-
-@media (max-width: 600px) {
-  .detail-dialog .v-overlay__scrim {
-    padding: 15px !important;
-  }
-  
-  .detail-dialog .v-overlay__content-container {
-    padding: 15px !important;
-  }
-}
-
-/* 다이얼로그 전체 스타일 */
-.detail-dialog .v-overlay__content {
-  margin: 15px auto !important;
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-}
-
-.detail-dialog .v-overlay {
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-}
-
-/* 모바일 다이얼로그 오버라이드 */
-@media (max-width: 600px) {
-  .detail-dialog {
-    margin: 0 !important;
-  }
-  
-  .detail-dialog .v-overlay__content {
-    margin: 15px auto !important;
-    max-width: calc(100vw - 30px) !important;
-    width: calc(100vw - 30px) !important;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-  }
-}
 </style>
