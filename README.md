@@ -28,17 +28,8 @@ npm run dev
 npm run build
 ```
 
-![firstImage](https://github.com/user-attachments/assets/f3dcb326-004e-4241-8f37-3aae5f779559)<svg width="393" height="767" viewBox="0 0 393 767" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 
 
-<img width="393" height="1013" alt="222222222222222222" src="https://github.com/user-attachments/assets/7392eec1-7335-4823-a7cf-a445fa688035" />
-
-
-
-![thirdImage](https://github.com/user-attachments/assets/4f7eee6f-7b74-4fd5-9667-91fa7c61014a)<svg width="393" height="626" viewBox="0 0 393 626" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-
-
-
-
-
-
+<img width="393" height="626" alt="3333333333333333333" src="https://github.com/user-attachments/assets/669fb970-f45d-4e09-8ec4-c8621adfce84" />
+<img width="393" height="1013" alt="222222222222222222" src="https://github.com/user-attachments/assets/12e66293-1ea5-4237-83c6-291b6d63276b" />
+<img width="590" height="1151" alt="1111111111111111" src="https://github.com/user-attachments/assets/433a2819-4d30-4fbc-8687-3648d786eb44" />
