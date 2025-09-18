@@ -219,7 +219,6 @@ onMounted(async ()=>{
 
 <style scoped>
 .home {
-  background-color: #f8f9fa;
   min-height: 100vh;
   overflow-x: hidden;
   width: 100%;

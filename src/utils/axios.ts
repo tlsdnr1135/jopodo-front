@@ -4,8 +4,8 @@ import axios from 'axios'
 const apiClient = axios.create({
   // 기본 URL 설정 (개발환경에서는 프록시 사용)
   baseURL: process.env.NODE_ENV === 'production'
-    ? 'http://localhost:8080'
-    : 'http://localhost:3000',
+    ? '/'
+    : '/',
 
   timeout: 20000,
   

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import firstImageSvg from '@/assets/image/firstImage.svg'
-import secondImageSvg from '@/assets/image/secondImage.svg'
-import thirdImageSvg from '@/assets/image/thirdImage.svg'
+import firstImageSvg from '@/assets/image/firstImage.jpg'
+import secondImageSvg from '@/assets/image/secondImage.jpg'
+import thirdImageSvg from '@/assets/image/thirdImage.png'
 import kakaoTalkSvg from '@/assets/image/kakaoTalk.svg'
 import { orderService } from '@/services/orderService'
 
@@ -109,9 +109,10 @@ const openKakaoTalk = () => {
 
     <!-- 주문폼 -->
     <div class="order-form-section">
-      <h2 class="section-title">주문하기</h2>
 
       <div class="form-container">
+        <h2 class="section-title">주문하기</h2>
+
         <!-- 선택 상품 -->
         <div class="form-row">
           <label class="form-label">상품 1번</label>
@@ -172,7 +173,7 @@ const openKakaoTalk = () => {
 
         <!-- 받는이 주소 -->
         <div class="form-row">
-          <label class="form-label">받는이 주소</label>
+          <div class="form-label">받는이 주소</div>
           <v-text-field
             v-model="customerAddress"
             placeholder="○○시 ○○구 ○○동"
@@ -238,7 +239,7 @@ const openKakaoTalk = () => {
         <h3 class="account-title">입금 계좌번호</h3>
         <div class="account-info">
           <div class="account-details">
-            <span>농협 351 0367 8557 33 조동순</span>
+            <span>농협 351 0367 8557 33 조용준</span>
             <v-btn size="small" color="success" class="confirm-btn" @click="copyAccountNumber">복사</v-btn>
           </div>
         </div>
@@ -249,7 +250,6 @@ const openKakaoTalk = () => {
         <img
           :src="kakaoTalkSvg"
           alt="카카오톡 문의"
-          class="contact-image kakao-image"
           @click="openKakaoTalk"
         />
       </div>
@@ -283,8 +283,15 @@ const openKakaoTalk = () => {
 </template>
 
 <style scoped>
+/* GmarketSans 폰트 선언 */
+@font-face {
+  font-family: 'GmarketSans';
+  font-style: normal;
+  font-weight: 700;
+  src: url('@/assets/font/GmarketSansTTF/GmarketSansTTFBold.ttf') format('truetype');
+}
+
 .home {
-  background-color: #f8f9fa;
   min-height: 100vh;
 }
 
@@ -293,25 +300,24 @@ const openKakaoTalk = () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(135deg, #d4f1d4 0%, #a8e6a8 100%);
-  padding: 20px;
 }
 
 .brand-image-item {
   max-width: 100%;
   width: 100%;
-  max-width: 400px;
+  max-width: 440px;
   height: auto;
   display: block;
 }
 
 /* 섹션 공통 스타일 */
 .section-title {
-  font-size: 24px;
-  font-weight: bold;
+  font-size: 43px;
+  color: #000000;
+  font-weight: 700;
   text-align: center;
   margin-bottom: 20px;
-  color: #2c5234;
+  font-family: 'GmarketSans', sans-serif;
 }
 
 /* 주문폼 섹션 */
@@ -414,44 +420,33 @@ const openKakaoTalk = () => {
 }
 
 .order-button {
-  background-color: #7E9509 !important;
-  color: white !important;
-  font-weight: bold;
+  height: 52px !important;
   font-size: 16px !important;
-  border-radius: 12px;
-  height: 48px !important;
+  font-weight: 700 !important;
+  color: white !important;
+  border-radius: 12px !important;
   text-transform: none !important;
   box-shadow: 0 4px 8px rgba(126, 149, 9, 0.3) !important;
 }
 
+.order-button :deep(.v-btn__content) {
+  font-weight: 700 !important;
+  font-size: 16px !important;
+}
+
 /* 문의 버튼들 */
 .contact-buttons {
-  display: flex;
-  gap: 15px;
-  justify-content: center;
-  margin: 30px auto 0;
-  max-width: 400px;
-  width: 100%;
-  flex-wrap: wrap;
-}
-
-.contact-image {
-  cursor: pointer;
-  transition: transform 0.2s ease, opacity 0.2s ease;
-}
-
-.contact-image:hover {
-  transform: scale(1.05);
-  opacity: 0.9;
-}
-
-.contact-image:active {
-  transform: scale(0.95);
-}
-
-.kakao-image {
   width: 400px;
-  height: auto;
+  margin: 0 auto;
+
+  img {
+    height: 52px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    display: block !important;
+    object-fit: cover !important;
+    border-radius: 8px;
+  }
 }
 
 /* 주문 완료 다이얼로그 스타일 */
@@ -508,7 +503,10 @@ const openKakaoTalk = () => {
 @media (max-width: 600px) {
   
   .section-title {
-    font-size: 20px;
+    font-size: 43px;
+    color: #000000;
+    font-weight: 700;
+    font-family: 'GmarketSans', sans-serif;
   }
   
   .order-form-section {
@@ -529,29 +527,35 @@ const openKakaoTalk = () => {
   }
 
   .form-label {
-    min-width: 70px;
+    min-width: 80px;
+    max-width: 210px;
     font-size: 13px;
   }
 
   .form-input {
     flex: 1;
   }
+  .order-button {
+    height: 42px !important;
+    font-size: 14px !important;
+  }
 
+  .order-button :deep(.v-btn__content) {
+    font-weight: 500 !important;
+    font-size: 14px !important;
+  }
   .contact-buttons {
-    gap: 10px;
-    justify-content: center;
-    max-width: calc(100% - 30px);
-    margin: 30px 15px 0;
-  }
-
-  .contact-image {
-    height: 35px;
-  }
-
-  .kakao-image {
-    width: 100%;
-    max-width: 100%;
-    height: auto;
+    width: 100% !important;
+    max-width: 400px !important;
+    
+    img {
+      height: 42px !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      display: block !important;
+      object-fit: cover !important;
+      border-radius: 8px;
+    }
   }
 
   .account-details {
